@@ -1,0 +1,165 @@
+:root {
+  --sidebar-color: #e3e5e8;
+  --active-home-icon-bg-color: #5865f2;
+  --active-home-icon-fill-color: #fff;
+  --active-pin-icon-fill-color: #fff;
+  --active-icon-bg-color: #f2ab58;
+  --active-icon-fill-color: #fff;
+  --pin-icon-fill-color: #58f280;
+  --active-pin-icon-bg-color: var(--pin-icon-fill-color);
+  --icon-bg-color: #fff;
+  --icon-fill-color: #363636;
+  --tooltip-bg-color: #fff;
+  --tooltip-fill-color: var(--icon-fill-color);
+  --seperator-color: #c5c5c5;
+  --chat-bg-color: #fff;
+  --chats-list-bg-color: #f2f3f5;
+}
+
+:root.dark {
+  --sidebar-color: #202225;
+  --icon-bg-color: #36393f;
+  --icon-fill-color: #dcddde;
+  --seperator-color: #363636;
+  --chat-bg-color: #36393f;
+  --tooltip-bg-color: #181818;
+  --chats-list-bg-color: #2f3136;
+}
+
+:root.no-anim {
+  transition: none !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.wrapper {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar {
+  flex: 0 0 auto;
+  padding-top: 0.75rem;
+  background-color: var(--sidebar-color);
+  margin: 0;
+  height: 100%;
+  width: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-button {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  color: var(--icon-fill-color);
+  background-color: var(--icon-bg-color);
+  border-radius: 50%;
+  transition: background-color 0.3s, color 0.3s, border-radius 0.3s;
+}
+
+.sidebar-button:hover, .sidebar-button.active {
+  color: var(--active-icon-fill-color);
+  background-color: var(--active-icon-bg-color);
+  border-radius: 30%;
+  cursor: pointer;
+}
+
+.sidebar-button.home-button:hover, .sidebar-button.home-button.active {
+  color: var(--active-home-icon-fill-color);
+  background-color: var(--active-home-icon-bg-color);
+}
+
+.sidebar-seperator {
+  flex: 0 0 auto;
+  margin: 0 auto 0.5rem;
+  width: 2rem;
+  height: 2px;
+  background-color: var(--seperator-color);
+  border-radius: 1px;
+  transition: background-color 0.3s;
+}
+
+.pin-button {
+  color: var(--pin-icon-fill-color);
+}
+
+.sidebar-button.pin-button:hover, .sidebar-button.pin-button.active {
+  color: var(--active-pin-icon-fill-color);
+  background-color: var(--active-pin-icon-bg-color);
+}
+
+svg {
+  vertical-align: top;
+}
+
+.sidebar-icon {
+  font-size: 1.5rem;
+  font-family: sans-serif;
+  line-height: 1rem;
+  user-select: none;
+}
+
+.button-tooltip {
+  white-space: nowrap;
+  font-family: sans-serif;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--tooltip-fill-color);
+  background-color: var(--tooltip-bg-color);
+  position: absolute;
+  left: 4rem;
+  top: 50%;
+  transform-origin: left;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.75);
+  line-height: 1rem;
+  pointer-events: none;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  transition: transform 0.1s, opacity 0.1s;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
+}
+
+.sidebar-button:hover .button-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.tab-body {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex: 1 1 auto;
+}
+
+.chats-list {
+  flex: 0 0 auto;
+  background-color: var(--chats-list-bg-color);
+  width: 15rem;
+  height: 100%;
+  transition: background-color 0.3s;
+}
+
+.chat-body {
+  background-color: var(--chat-bg-color);
+  width: 100%;
+}
