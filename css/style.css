@@ -1,19 +1,23 @@
 :root {
   --sidebar-color: #e3e5e8;
-  --active-home-icon-bg-color: #5865f2;
+  --pin-icon-fill-color: hsl(120, 85%, 65%);
+  --active-home-icon-bg-color: hsl(240, 85%, 65%);
   --active-home-icon-fill-color: #fff;
-  --active-pin-icon-fill-color: #fff;
-  --active-icon-bg-color: #f2ab58;
-  --active-icon-fill-color: #fff;
-  --pin-icon-fill-color: #58f280;
   --active-pin-icon-bg-color: var(--pin-icon-fill-color);
+  --active-pin-icon-fill-color: #fff;
+  --active-icon-bg-color: hsl(40, 85%, 65%);
+  --active-hidden-user-button-icon-bg-color: hsl(0, 85%, 65%);
+  --active-user-button-icon-bg-color: hsl(200, 85%, 65%);
+  --active-icon-fill-color: #fff;
   --icon-bg-color: #fff;
   --icon-fill-color: #363636;
-  --tooltip-bg-color: #fff;
-  --tooltip-fill-color: var(--icon-fill-color);
+  --floating-bg-color: #fff;
+  --floating-fill-color: #b9bbbe;
   --seperator-color: #c5c5c5;
   --chat-bg-color: #fff;
-  --chats-list-bg-color: #f2f3f5;
+  --chats-list-bg-color: #f2f2f2;
+  --success-color: var(--pin-icon-fill-color);
+  --danger-color: var(--active-hidden-user-button-icon-bg-color);
 }
 
 :root.dark {
@@ -22,15 +26,23 @@
   --icon-fill-color: #dcddde;
   --seperator-color: #363636;
   --chat-bg-color: #36393f;
-  --tooltip-bg-color: #181818;
+  --floating-bg-color: #16171a;
   --chats-list-bg-color: #2f3136;
 }
 
-:root.no-anim {
-  transition: none !important;
+:root.no-anim * {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
 }
 
 * {
+  vertical-align: top;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
@@ -40,11 +52,22 @@ html, body {
 }
 
 body {
-  margin: 0;
+  font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+li {
+  list-style: none;
+}
+
+span {
+  display: inline-block;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .wrapper {
-  position: absolute;
   display: flex;
   width: 100%;
   height: 100%;
@@ -52,7 +75,7 @@ body {
 
 .sidebar {
   flex: 0 0 auto;
-  padding-top: 0.75rem;
+  padding: 0.75rem 0 0;
   background-color: var(--sidebar-color);
   margin: 0;
   height: 100%;
@@ -77,72 +100,64 @@ body {
   transition: background-color 0.3s, color 0.3s, border-radius 0.3s;
 }
 
-.sidebar-button:hover, .sidebar-button.active {
+.sidebar-button.hover, .sidebar-button.active {
   color: var(--active-icon-fill-color);
   background-color: var(--active-icon-bg-color);
   border-radius: 30%;
   cursor: pointer;
 }
 
-.sidebar-button.home-button:hover, .sidebar-button.home-button.active {
+.sidebar-button.home-button.hover, .sidebar-button.home-button.active {
   color: var(--active-home-icon-fill-color);
   background-color: var(--active-home-icon-bg-color);
 }
 
-.sidebar-seperator {
+.seperator {
   flex: 0 0 auto;
-  margin: 0 auto 0.5rem;
-  width: 2rem;
-  height: 2px;
+  margin: 0.25rem;
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   background-color: var(--seperator-color);
-  border-radius: 1px;
   transition: background-color 0.3s;
 }
 
-.pin-button {
+.sidebar .seperator {
+  width: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.sidebar-button.pin-button {
   color: var(--pin-icon-fill-color);
 }
 
-.sidebar-button.pin-button:hover, .sidebar-button.pin-button.active {
+.sidebar-button.pin-button.hover, .sidebar-button.pin-button.active {
   color: var(--active-pin-icon-fill-color);
   background-color: var(--active-pin-icon-bg-color);
 }
 
-svg {
-  vertical-align: top;
+.sidebar-button[hidden-user].hover, .sidebar-button[hidden-user].active {
+  background-color: var(--active-hidden-user-button-icon-bg-color)
+}
+
+.sidebar-button.user-button.hover, .sidebar-button.user-button.active {
+  background-color: var(--active-user-button-icon-bg-color)
 }
 
 .sidebar-icon {
   font-size: 1.5rem;
-  font-family: sans-serif;
   line-height: 1rem;
   user-select: none;
 }
 
-.button-tooltip {
-  white-space: nowrap;
-  font-family: sans-serif;
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: var(--tooltip-fill-color);
-  background-color: var(--tooltip-bg-color);
-  position: absolute;
-  left: 4rem;
-  top: 50%;
-  transform-origin: left;
-  opacity: 0;
-  transform: translateY(-50%) scale(0.75);
-  line-height: 1rem;
-  pointer-events: none;
-  padding: 0.5rem;
-  border-radius: 0.3rem;
-  transition: transform 0.1s, opacity 0.1s;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
+.sidebar-pinned {
+  height: 100%;
+  overflow: auto;
+  margin-bottom: 0.5rem;
 }
 
-.sidebar-button:hover .button-tooltip {
-  opacity: 1;
-  transform: translateY(-50%) scale(1);
+.sidebar-pinned .sidebar-button:last-child {
+  margin: 0;
 }
 
 .tab-body {
@@ -163,4 +178,150 @@ svg {
 .chat-body {
   background-color: var(--chat-bg-color);
   width: 100%;
+}
+
+.floating {
+  color: var(--floating-fill-color);
+  background-color: var(--floating-bg-color);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.24);
+}
+
+.context-menu {
+  min-width: 11.25rem;
+  max-width: 20rem;
+  display: flex;
+  font-weight: 500;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+  user-select: none;
+  position: absolute;
+  opacity: 0;
+  font-size: 0.875rem;
+  transform-origin: left top;
+  transform: scale(0.75);
+  pointer-events: none;
+  transition: transform 0.1s, opacity 0.1s;
+}
+
+.context-menu:focus {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  width: 100%;
+  line-height: 1.125rem;
+  border-radius: 0.15rem;
+  margin: 0.1rem 0;
+}
+
+.menu-item.hover {
+  cursor: pointer;
+  color: white;
+  background-color: var(--active-home-icon-bg-color);
+}
+
+.menu-item-label {
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.success {
+  color: var(--success-color);
+}
+
+.danger {
+  color: var(--danger-color);
+}
+
+.success.hover {
+  background-color: var(--success-color);
+}
+
+.danger.hover {
+  background-color: var(--danger-color);
+}
+
+.tooltip {
+  color: var(--icon-fill-color);
+  white-space: nowrap;
+  font-weight: 600;
+  position: absolute;
+  left: 5rem;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.5);
+  line-height: 1.25rem;
+  user-select: none;
+  pointer-events: none;
+  border-radius: 0.5rem;
+  transition: transform 0.1s, opacity 0.1s;
+}
+
+.tooltip.visible {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.tooltip-pointer {
+  width: 0;
+  height: 0;
+  border: 0.3rem solid transparent;
+  position: absolute;
+}
+
+.tooltip-content {
+  padding: 0.5rem 0.75rem;
+}
+
+.tooltip[data-top] {
+  transform-origin: bottom;
+}
+
+.tooltip[data-right] {
+  transform-origin: left;
+}
+
+.tooltip[data-bottom] {
+  transform-origin: top;
+}
+
+.tooltip[data-left] {
+  transform-origin: right;
+}
+
+.tooltip[data-top] .tooltip-pointer {
+  top: 100%;
+  left: 50%;
+  margin-left: -0.3rem;
+  border-top-color: var(--floating-bg-color);
+}
+
+.tooltip[data-right] .tooltip-pointer {
+  right: 100%;
+  top: 50%;
+  margin-top: -0.3rem;
+  border-right-color: var(--floating-bg-color);
+}
+
+.tooltip[data-bottom] .tooltip-pointer {
+  bottom: 100%;
+  left: 50%;
+  margin-left: -0.3rem;
+  border-bottom-color: var(--floating-bg-color);
+}
+
+.tooltip[data-left] .tooltip-pointer {
+  left: 100%;
+  top: 50%;
+  margin-top: -0.3rem;
+  border-left-color: var(--floating-bg-color);
 }

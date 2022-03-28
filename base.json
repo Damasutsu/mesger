@@ -1,0 +1,36 @@
+[{
+    "id": 1,
+    "nickname": "Алина Васильева",
+    "isHidden": true
+  },
+  {
+    "id": 2,
+    "nickname": "Adelina Bonerson",
+    "isHidden": false
+  },
+  {
+    "id": 3,
+    "nickname": "Александра Соколова",
+    "isHidden": false
+  },
+  {
+    "id": 4,
+    "nickname": "Денис Марков",
+    "isHidden": false
+  },
+  {
+    "id": 5,
+    "nickname": "Эмир Сергеев",
+    "isHidden": false
+  },
+  {
+    "id": 6,
+    "nickname": "Александра Горячева",
+    "isHidden": false
+  },
+  {
+    "id": 7,
+    "nickname": "Артём Попов",
+    "isHidden": false
+  }
+]
