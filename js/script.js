@@ -46,7 +46,7 @@ let base
 
 const sidebarPinned = document.querySelector('.sidebar-pinned')
 
-fetch('/base.json').then(async (res) =>
+fetch('./base.json').then(async (res) =>
 {
   base = await res.json()
   for (let user of base)
