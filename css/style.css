@@ -199,7 +199,7 @@ span {
   user-select: none;
   position: absolute;
   opacity: 0;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   transform-origin: left top;
   transform: scale(0.75);
   pointer-events: none;
