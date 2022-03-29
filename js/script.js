@@ -51,7 +51,7 @@ fetch('./base.json').then(async (res) =>
   base = await res.json()
   for (let user of base)
   {
-    sidebarPinned.appendChild(createUser(user))
+    sidebarPinned.children[0].appendChild(createUser(user))
   }
 })
 
@@ -93,39 +93,40 @@ function attachListeners(element)
     {
       element.focused = true
     }
-    if (element.classList.contains('sidebar-button'))
+    if ((element.focused && document.activeElement === contextMenuElement) || !element.focused)
     {
-      tooltip.style.top = `${element.offsetTop + element.offsetHeight / 2 - element.parentElement.scrollTop}px`
-      tooltipContent.textContent = `${element.ariaLabel}`
-      tooltip.dataset.right = ''
-      tooltip.classList.toggle('visible', true)
+      if (element.classList.contains('sidebar-button'))
+      {
+        tooltip.style.top = `${element.offsetTop + element.offsetHeight / 2 - element.parentElement.scrollTop}px`
+        tooltipContent.textContent = `${element.ariaLabel}`
+        tooltip.dataset.right = ''
+        tooltip.classList.toggle('visible', true)
+      }
     }
-    element.classList.toggle(e.type === 'mouseenter' ? 'hover' : 'focused', true)
+    element.classList.toggle('hover', true)
   }
 
   element.addEventListener('mouseenter', focused)
-  element.addEventListener('focus', focused)
 
   let blurred = (e) =>
   {
     element.focused = false
     tooltip.classList.toggle('visible', false)
-    element.classList.toggle(e.type === 'mouseleave' ? 'hover' : 'focused', false)
+    element.classList.toggle('hover', false)
   }
 
   element.addEventListener('mouseleave', blurred)
-  element.addEventListener('blur', blurred)
 
   element.addEventListener('mouseup', (e) =>
   {
+    if (element.focused)
+    {
+      element.focused = false
+      e.preventDefault()
+      return
+    }
     if (e.which === MOUSE_LEFT)
     {
-      if (element.focused)
-      {
-        element.focused = false
-        e.preventDefault()
-        return
-      }
       if (this.prevElement)
       {
         if (this.prevElement !== element)
@@ -147,7 +148,7 @@ function attachListeners(element)
     element.addEventListener('contextmenu', contextMenu.bind(element))
 }
 
-const wrapperElement = document.querySelector('.wrapper')
+const appElement = document.querySelector('.app')
 
 const contextMenuElement = document.querySelector('.context-menu')
 
@@ -157,7 +158,7 @@ function contextMenu(e)
   {
     preventScroll: true
   });
-  contextMenuElement.style.top = `${this.offsetTop + this.offsetHeight / 2 - this.parentElement.scrollTop}px`
+  contextMenuElement.style.top = `${e.clientY}px`
   contextMenuElement.style.left = `${e.clientX}px`
 }
 
