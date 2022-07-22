@@ -6,6 +6,7 @@
   {
     "id": 2,
     "nickname": "Adelina Bonerson",
+    "profileImage":"https://dummyimage.com/48",
     "isHidden": false
   },
   {
@@ -31,6 +32,16 @@
   {
     "id": 7,
     "nickname": "Артём Попов",
+    "isHidden": false
+  },
+  {
+    "id": 8,
+    "nickname": "Анастасия Марченко",
+    "isHidden": false
+  },
+  {
+    "id": 9,
+    "nickname": "Мария Павлиошвили",
     "isHidden": false
   }
 ]

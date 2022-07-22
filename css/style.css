@@ -52,7 +52,7 @@ html, body {
 }
 
 body {
-  font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   overflow: hidden;
 }
 
@@ -99,14 +99,18 @@ span {
   color: var(--icon-fill-color);
   background-color: var(--icon-bg-color);
   border-radius: 50%;
+  overflow: hidden;
   transition: background-color 0.3s, color 0.3s, border-radius 0.3s;
+}
+
+.sidebar-button:hover {
+  cursor: pointer;
 }
 
 .sidebar-button.hover, .sidebar-button.active {
   color: var(--active-icon-fill-color);
   background-color: var(--active-icon-bg-color);
   border-radius: 30%;
-  cursor: pointer;
 }
 
 .sidebar-button.home-button.hover, .sidebar-button.home-button.active {
@@ -150,6 +154,11 @@ span {
   font-size: 1.5rem;
   line-height: 1rem;
   user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .sidebar-pinned {
@@ -197,6 +206,20 @@ span {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.24);
 }
 
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+
+.overlay.active {
+  visibility: visible;
+}
+
 .context-menu {
   min-width: 11.25rem;
   max-width: 20rem;
@@ -206,22 +229,39 @@ span {
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
-  border-radius: 0.3rem;
+  border-radius: 0.625rem;
   user-select: none;
   position: absolute;
   opacity: 0;
   font-size: 0.9rem;
   overflow: hidden;
+  visibility: hidden;
   transform-origin: left top;
   transform: scale(0.75);
-  pointer-events: none;
-  transition: transform 0.1s, opacity 0.1s;
+  transition: transform 0.2s 0.2s, opacity 0.2s;
 }
 
-.context-menu:focus {
+.context-menu.visible {
+  visibility: visible;
   opacity: 1;
   transform: scale(1);
-  pointer-events: auto;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.context-menu.top.left {
+  transform-origin: top left;
+}
+
+.context-menu.top.right {
+  transform-origin: top right;
+}
+
+.context-menu.bottom.left {
+  transform-origin: bottom left;
+}
+
+.context-menu.bottom.right {
+  transform-origin: bottom right;
 }
 
 .menu-item {
@@ -234,10 +274,22 @@ span {
   margin: 0.1rem 0;
 }
 
+.menu-item:hover {
+    cursor: pointer;
+}
+
 .menu-item.hover {
-  cursor: pointer;
   color: white;
   background-color: var(--active-home-icon-bg-color);
+}
+
+.menu-item-checkbox::after {
+  content: '';
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  position: absolute;
+  right: 16px;
 }
 
 .menu-item-label {
